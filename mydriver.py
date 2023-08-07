@@ -3,7 +3,7 @@ This driver does not do any action.
 """
 from rose.common import obstacles, actions  # NOQA
 
-driver_name = "EpicAwesome1" #do recommend better names in the whatasapp group chat :D
+driver_name = "EpicAwesome" #do recommend better names in the whatasapp group chat :D
 
 
 def drive(world):
@@ -14,27 +14,14 @@ def drive(world):
     pos_left = get_left_pos(car_pos)
     pos_right = get_right_pos(car_pos)
 
-    try:
-        obs_forward = world.get(pos_forward)
-    except IndexError:
-        obs_forward = obstacles.TRASH
-    try:
-        obs_left = world.get(pos_left)
-    except IndexError:
-        obs_left = obstacles.TRASH
-    try:
-        obs_right = world.get(pos_right)
-    except IndexError:
-        obs_right = obstacles.TRASH
-
     score_forward = count_best_score(world, pos_forward, False, max_iterations)
     score_left = count_best_score(world, pos_left, True, max_iterations)
     score_right = count_best_score(world, pos_right, True, max_iterations)
-    if get_points_by_obstacle(obs_forward, False) >= 0 and score_right < score_forward > score_left:  # Forward score is the best
+    if score_right <= score_forward >= score_left:  # Forward score is the best
         return do_action(world.get(pos_forward))
-    if get_points_by_obstacle(obs_left, True) >= 0 and score_forward < score_left > score_right:  # Left score is the best
+    if score_forward <= score_left >= score_right:  # Left score is the best
         return actions.LEFT
-    if get_points_by_obstacle(obs_right, True) >= 0 and score_forward < score_right > score_left:  # Right score is the best
+    if score_forward <= score_right >= score_left:  # Right score is the best
         return actions.RIGHT
     return actions.NONE
 
