@@ -12,16 +12,18 @@ def drive(world):
     pos_forward = get_forward_pos(car_pos)
     pos_left = get_left_pos(car_pos)
     pos_right = get_right_pos(car_pos)
+    max_iterations = 4
 
-    score_forward = count_best_score(world, pos_forward, False)
-    score_left = count_best_score(world, pos_left, True)
-    score_right = count_best_score(world, pos_right, True)
+    score_forward = count_best_score(world, pos_forward, False, max_iterations)
+    score_left = count_best_score(world, pos_left, True, max_iterations)
+    score_right = count_best_score(world, pos_right, True, max_iterations)
     if score_right < score_forward > score_left:  # Forward score is the best
         return do_action(world.get(pos_forward))
     if score_forward < score_left > score_right:  # Left score is the best
         return actions.LEFT
     if score_forward < score_right > score_left:  # Right score is the best
         return actions.RIGHT
+    return actions.NONE
 
 
 """
@@ -33,7 +35,9 @@ trash, bike, barrier - -10
 """
 
 
-def count_best_score(world, pos, by_turn: bool):
+def count_best_score(world, pos, by_turn: bool, iterations):
+    if iterations == 0:
+        return 0
     try:
         obstacle = world.get(pos)
     except IndexError:
@@ -44,13 +48,9 @@ def count_best_score(world, pos, by_turn: bool):
     pos_right = get_right_pos(pos)
 
     score = get_points_by_obstacle(obstacle, by_turn)  # This square score
-    score_forward = count_best_score(world, pos_forward, False)
-
-    if obstacle == obstacles.PENGUIN:
-        return score + score_forward
-
-    score_left = count_best_score(world, pos_left, True)
-    score_right = count_best_score(world, pos_right, True)
+    score_forward = count_best_score(world, pos_forward, False, iterations - 1)
+    score_left = count_best_score(world, pos_left, True, iterations - 1)
+    score_right = count_best_score(world, pos_right, True, iterations - 1)
 
     return score + max([score_forward, score_left, score_right])
 
