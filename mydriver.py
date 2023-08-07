@@ -75,8 +75,7 @@ def do_action(obstacle):
         return actions.PICKUP
     elif obstacle == obstacles.CRACK:
         return actions.JUMP
-    elif obstacle == obstacles.BIKE or obstacle == obstacles.TRASH or obstacle == obstacles.BARRIER:
-        return actions.NONE
+    return actions.NONE
 
 
 def get_forward_pos(pos):
