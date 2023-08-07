@@ -45,6 +45,10 @@ def count_best_score(world, pos, by_turn: bool):
 
     score = get_points_by_obstacle(obstacle, by_turn)  # This square score
     score_forward = count_best_score(world, pos_forward, False)
+
+    if obstacle == obstacles.PENGUIN:
+        return score + score_forward
+
     score_left = count_best_score(world, pos_left, True)
     score_right = count_best_score(world, pos_right, True)
 
