@@ -47,7 +47,7 @@ def count_best_score(world, pos, by_turn: bool):
     score_forward = count_best_score(world, pos_forward, False)
     score_left = count_best_score(world, pos_left, True)
     score_right = count_best_score(world, pos_right, True)
-    
+
     return score + max([score_forward, score_left, score_right])
 
 
