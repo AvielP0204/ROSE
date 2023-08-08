@@ -1,9 +1,6 @@
-"""
-This driver does not do any action.
-"""
 from rose.common import obstacles, actions  # NOQA
 
-driver_name = "EpicAwesome" #do recommend better names in the whatasapp group chat :D
+driver_name = "EpicAwesome"  # do recommend better names in the whatasapp group chat :D
 
 
 def drive(world):
@@ -26,22 +23,13 @@ def drive(world):
     return actions.NONE
 
 
-"""
-none - 0
-penguin - 10/0
-water - 4/-10
-crack - 5/-10
-trash, bike, barrier - -10
-"""
-
-
 def count_best_score(world, pos, by_turn: bool, iterations):
     if iterations == 0:
         return 0
     try:
         obstacle = world.get(pos)
     except IndexError:
-        return -30
+        return -100  # Absolute evil turn
 
     pos_forward = get_forward_pos(pos)
     pos_left = get_left_pos(pos)
