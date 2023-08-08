@@ -1,0 +1,16 @@
+ideas:
+1. make a seed generator that will use a random seed to spawn the obstacles. this will allow to reuse the same
+road many times to playtest the car(s) in different scenarios.
+2. obstacle customization. this feature will allow the players to enable / disable certain obstacles from appearing
+during the run. for example: you could make only penguins spawn, only crashable obstacles and so on.
+3. car customization. this feature will allow the users to change their car name and color during the game, without
+the need to edit them in the code.
+4. car animations. instead of the car snapping to the lane it turned to, it will slowly "slide" to that lane, which
+looks nicer. could also add animations for jumping and collecting.
+5. score tracker. the website will track the scores the car got each run. it will also show the difference, the
+fps setting used, and will also show the average between all the runs. can be combined with idea no 1 to also display
+the seed used.+
+6. a feature that will show how good was your move, based on best_driveer.pyc's logic. will also add a "training"
+mode that will be the player's car vs best_driver.pyc, but best_driver.pyc will be a ghost that will spawn on the
+same location as the player. it will not collide with it, and will serve to show the difference between your logic
+and the "best" logic.
