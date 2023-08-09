@@ -1,6 +1,7 @@
 import random
 import logging
 import os
+import json
 
 import six
 
@@ -63,6 +64,7 @@ class Game(object):
         self.looper.stop()
         self.started = False
         self.update_clients()
+        self.update_best_score()
         self.print_stats()
 
     def add_player(self, name):
@@ -131,3 +133,14 @@ class Game(object):
                 'players': [p.state() for p in six.itervalues(self.players)],
                 'timeleft': self.timeleft,
                 'rate': self.rate}
+
+    def update_best_score(self):
+        with open("scores.json", "r+") as f:
+            d = json.load(f)
+            for i in self.players.values():
+                if i.client_id not in d or i.score > d[i.client_id]:
+                    d[i.client_id] = i.score
+            f.seek(0)
+            json.dump(d, f)
+            f.truncate()
+
