@@ -117,6 +117,14 @@ body {
     top: 50px;
 }
 
+.best-score {
+    width: 100%;
+    text-align:center;
+    position: absolute;
+    font-size: 40px;
+    top: 50px;
+}
+
 #time_left {
     width: 105px;
     font-size: 50px;

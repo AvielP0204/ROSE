@@ -1,3 +1,4 @@
+import data from '../server/scores.json'
 var ROSE = (function() {
     "use strict";
 
@@ -233,11 +234,14 @@ var ROSE = (function() {
     function Dashboard() {
         this.players = null;
         this.timeleft = null;
+        this.best_scores = null
+        this.id = null
     }
 
     Dashboard.prototype.update = function(state) {
         this.players = state.players;
         this.timeleft = state.timeleft;
+        this.best_scores = JSON.parse(data)
     }
 
     Dashboard.prototype.draw = function(ctx) {
@@ -253,10 +257,12 @@ var ROSE = (function() {
             var player = this.players[i];
             if (player.lane == 0) {
                 $("#left.player .name").text(player.name)
+                $("#left.player .best-score").text("Best: 0")
                 $("#left.player .score").text(player.score)
             }
             if (player.lane == 1) {
                 $("#right.player .name").text(player.name)
+                $("#right.player .best-score").text("Best: 0")
                 $("#right.player .score").text(player.score)
             }
         }
