@@ -6,6 +6,7 @@ import sys
 
 from twisted.internet import reactor, protocol
 from twisted.protocols import basic
+from client_id import get_uuid
 
 from rose.common import config, message
 from . import game
@@ -43,6 +44,7 @@ class ClientFactory(protocol.ReconnectingClientFactory):
     def __init__(self, name, drive_func):
         self.game = game.Game(self, name, drive_func)
         self.client = None
+        self.client_id = get_uuid()
 
     # Client events
 
