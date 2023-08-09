@@ -3,10 +3,11 @@ from rose.common import actions, config
 
 class Player(object):
 
-    def __init__(self, name, car, lane):
+    def __init__(self, name, car, lane, player_id):
         self.name = name
         self.car = car
         self.lane = lane
+        self.player_id = player_id
         self.x = None
         self.y = None
         self.action = None

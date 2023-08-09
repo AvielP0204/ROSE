@@ -65,7 +65,7 @@ class Game(object):
         self.update_clients()
         self.print_stats()
 
-    def add_player(self, name):
+    def add_player(self, name, player_id):
         if name in self.players:
             raise error.PlayerExists(name)
         if not self.free_cars:
@@ -75,7 +75,7 @@ class Game(object):
         lane = random.choice(tuple(self.free_lanes))
         self.free_lanes.remove(lane)
         log.info('add player: %r, lane: %r, car: %r', name, lane, car)
-        self.players[name] = player.Player(name, car, lane)
+        self.players[name] = player.Player(name, car, lane, player_id)
         reactor.callLater(0, self.update_clients)
 
     def remove_player(self, name):
