@@ -135,12 +135,16 @@ class Game(object):
                 'rate': self.rate}
 
     def update_best_score(self):
-        with open("scores.json", "r+") as f:
-            d = json.load(f)
-            for i in self.players.values():
-                if i.client_id not in d or i.score > d[i.client_id]:
-                    d[i.client_id] = i.score
-            f.seek(0)
-            json.dump(d, f)
-            f.truncate()
-
+        with open("scores.json", "r+") as file:
+            scoreboard = json.load(file)
+            for player in self.players.values():
+                player_id = player.client_id
+                if player_id not in scoreboard:
+                    scoreboard[player_id] = {"name": None, "score": None}
+                if not scoreboard[player_id]["score"] or player.score > scoreboard[player_id]["score"]:
+                    scoreboard[player_id]["score"] = player.score
+                if not scoreboard[player_id]["name"] or player.name != scoreboard[player_id]["name"]:
+                    scoreboard[player_id]["name"] = player.name
+            file.seek(0)
+            json.dump(scoreboard, file)
+            file.truncate()
