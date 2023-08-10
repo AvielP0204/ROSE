@@ -11,7 +11,7 @@ def drive(world):
     global first_x
     if first_x == -10:
         first_x = world.car.x
-    max_iterations = 2
+    max_iterations = 3
     car_pos = (world.car.x, world.car.y)
 
     pos_forward = get_forward_pos(car_pos)
@@ -41,12 +41,14 @@ trash, bike, barrier - -10
 
 def count_best_score(world, pos, by_turn: bool, iterations):
     global first_x
-    if iterations == 0 or abs(first_x - pos[0]) > 1:
+    if abs(first_x - pos[0]) > 1:
+        return -100
+    if iterations == 0:
         return 0
     try:
         obstacle = world.get(pos)
     except IndexError:
-        return -30
+        return -100
 
     pos_forward = get_forward_pos(pos)
     pos_left = get_left_pos(pos)
