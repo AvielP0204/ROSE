@@ -6,7 +6,7 @@ import sys
 
 from twisted.internet import reactor, protocol
 from twisted.protocols import basic
-from client_id import get_uuid
+from rose.client.client_id import *
 
 from rose.common import config, message
 from . import game

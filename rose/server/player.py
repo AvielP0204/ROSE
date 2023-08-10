@@ -14,7 +14,7 @@ class Player(object):
         self.action = None
         self.response_time = None
         self.score = None
-        self.best_score = self.get_best_score()
+        self.best_score = 666 # self.get_best_score()
         self.reset()
 
     # Game state interface
@@ -49,7 +49,8 @@ class Player(object):
                 'x': self.x,
                 'y': self.y,
                 'lane': self.lane,
-                'score': self.score}
+                'score': self.score,
+                'best_score': self.best_score}
 
     def get_best_score(self):
         with open("scores.json", "r") as file:
