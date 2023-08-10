@@ -1,4 +1,5 @@
 from rose.common import actions, config
+import json
 
 
 class Player(object):
@@ -13,6 +14,7 @@ class Player(object):
         self.action = None
         self.response_time = None
         self.score = None
+        self.best_score = self.get_best_score()
         self.reset()
 
     # Game state interface
@@ -48,3 +50,8 @@ class Player(object):
                 'y': self.y,
                 'lane': self.lane,
                 'score': self.score}
+
+    def get_best_score(self):
+        with open("scores.json", "r") as file:
+            jfile = json.load(file)
+        return jfile[self.player_id]["score"]
