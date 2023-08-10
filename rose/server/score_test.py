@@ -16,7 +16,7 @@ class SinglePlayerTest(object):
 
     def setup_method(self, m):
         self.track = track.Track()
-        self.player = player.Player("A", car=0, lane=0)
+        self.player = player.Player("A", car=0, lane=0, player_id=None)
         self.x = self.player.x
         self.y = self.player.y
         self.score = self.player.score
@@ -268,8 +268,8 @@ class TestCollisions(object):
 
     def setup_method(self, m):
         self.track = track.Track()
-        self.player1 = player.Player("A", car=0, lane=0)
-        self.player2 = player.Player("B", car=0, lane=1)
+        self.player1 = player.Player("A", car=0, lane=0, player_id=None)
+        self.player2 = player.Player("B", car=0, lane=1, player_id=None)
 
     def process(self):
         players = {self.player1.name: self.player1,

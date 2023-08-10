@@ -24,7 +24,7 @@ class Hub(object):
     def add_player(self, player):
         # First add player, will raise if there are too many players or this
         # name is already taken.
-        self.game.add_player(player.name)
+        self.game.add_player(player.name, player.player_id)
         self.clients.add(player)
 
     def remove_player(self, player):
@@ -58,6 +58,7 @@ class PlayerProtocol(basic.LineReceiver):
     def __init__(self, hub):
         self.hub = hub
         self.name = None
+        self.player_id = None
 
     # LineReceiver interface
 
@@ -82,14 +83,16 @@ class PlayerProtocol(basic.LineReceiver):
     # Disaptching messages
 
     def dispatch(self, msg):
-        if self.name is None:
+        if self.name and self.player_id is None:
             # New player
             if msg.action != 'join':
                 raise error.ActionForbidden(msg.action)
             if 'name' not in msg.payload:
                 raise error.InvalidMessage("name required")
+            if 'player_id' not in msg.payload:
+                raise error.InvalidMessage("player id required")
             self.name = msg.payload['name']
-            self.hub.add_player(self)
+            self.hub.add_player(self, self)
         else:
             # Registered player
             if msg.action == 'drive':
