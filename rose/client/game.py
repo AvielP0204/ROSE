@@ -17,10 +17,11 @@ log = logging.getLogger('game')
 
 class Game(component.Component):
 
-    def __init__(self, client, name, drive_func):
+    def __init__(self, client, name, client_id, drive_func):
         self.client = client
         self.drive_func = drive_func
         self.name = name
+        self.client_id = client_id
         self.track = track.Track()
         self.players = {}
         self.cars = [car.Car(1),
@@ -66,7 +67,7 @@ class Game(component.Component):
 
     def client_connected(self):
         log.info('client connected: joining as %s', self.name)
-        msg = message.Message('join', {"name": self.name})
+        msg = message.Message('join', {"name": self.name, "client_id": self.client_id})
         self.client.send_message(msg)
 
     def client_disconnected(self, reason):

@@ -58,7 +58,7 @@ class PlayerProtocol(basic.LineReceiver):
     def __init__(self, hub):
         self.hub = hub
         self.name = None
-        self.player_id = None
+        self.client_id = None
 
     # LineReceiver interface
 
@@ -83,15 +83,16 @@ class PlayerProtocol(basic.LineReceiver):
     # Disaptching messages
 
     def dispatch(self, msg):
-        if self.name and self.player_id is None:
+        if self.name and self.client_id is None:
             # New player
             if msg.action != 'join':
                 raise error.ActionForbidden(msg.action)
             if 'name' not in msg.payload:
                 raise error.InvalidMessage("name required")
-            if 'player_id' not in msg.payload:
+            if 'client_id' not in msg.payload:
                 raise error.InvalidMessage("player id required")
             self.name = msg.payload['name']
+            self.player_id = msg.payload['client_id']
             self.hub.add_player(self, self)
         else:
             # Registered player
